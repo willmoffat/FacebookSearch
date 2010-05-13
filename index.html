@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script>
+
+  $(function() {
+    var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'rectal surgery').replace(/\+/g,' ');
+
+    var ROW_HTML=['',
+    '<tr>',
+    '  <td class="person">',
+    '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><img class="profile" src="http://graph.facebook.com/ID/picture"/><br>NAME</a>',
+    '  </td>',
+    '<td class="msg"><q>MSG</q></td>',
+    '</tr>'].join('\n');
+    
+    $('#q').attr('value',q);
+    
+    $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, function(response, textStatus) {
+      //console.warn(response);
+      jQuery.each(response.data,function(_,post) {
+        var html = ROW_HTML
+        .replace(/ID/g,  post.from.id)
+        .replace(/NAME/g,post.from.name)
+        .replace(/MSG/g, post.message||'');
+        $(html).appendTo($('table'));
+      });
+    });
+  });
+  </script>
+
+  <title>Facebook Search</title>
+
+  <style>
+  #header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em;}
+  a { text-decoration:none; }
+  img.profile { border: thin solid gray; padding: 2px; width: 50px; height: 50px; }
+  ul { list-style:none; }
+  td { padding-bottom:2em; vertical-align: top; font-family: Tahoma, sans-serif; font-size: 13px;}
+  td.person { width:80px; text-align:center;}
+  td.msg { width:30em; }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <form action="">
+      <label>Search Facebook: <input id="q" name="q" type="text"/></label>
+      <input type="submit" value="Go!"/>
+    </form>
+  </div>
+
+  <div id="body">
+    <table></table>
+  </div>
+
+  <div id="footer">
+
+  </div>    
+</body>
+</html>​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
