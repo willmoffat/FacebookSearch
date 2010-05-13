@@ -7,7 +7,9 @@ $(function() {
     return '<img class="gender" src="images/'+gender+'.png" />';
   }
   function highlight(q,text) {
-    var re = new RegExp('\\b'+ q.replace(/[^a-z0-9]+/gi,'|') + '\\b', 'g');
+    q = q.replace(/[^a-z0-9]+/gi,'|') // words seperated by |
+         .replace(/^\||\/$/g,'');     // remove leading and trailing |
+    var re = new RegExp('\\b'+ q + '\\b', 'gi');
     return text.replace(re,'<b>$&</b>');
   }
   
