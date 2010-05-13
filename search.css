@@ -5,6 +5,8 @@ body,input,.fix { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
 #q,#search { margin:0px; border:none; padding:2px; }
 #q {background-color: white; }
 #search {cursor:pointer; border-left:thin solid gray; background-color:#ddd;}
+label>img { margin-right:5px; }
+
 #examples { font-size:80%; margin-top:1em; }
 #examples a { padding-right: 0.7em; }
 

@@ -3,8 +3,9 @@ $(function() {
   
   var params={};
   document.location.search.replace(/[?&]([^&=]+)=([^&]+)/g,function(_,key,val) { params[key]=decodeURIComponent(val).replace(/\+/g,' '); });
-  params.q = params.q || examples[0];
-  
+  params.q      = params.q      || examples[0];
+  params.gender = params.gender || 'any';
+   
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
     if (!gender) { return ''; }
@@ -36,7 +37,7 @@ $(function() {
   }
   
   $('#q').attr('value',params.q);
-  if (params.gender) { $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender); }
+  $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender);
   $('input:radio').click(function() { update_gender($(this).val()); });
   
   $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
