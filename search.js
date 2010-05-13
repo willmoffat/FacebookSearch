@@ -1,6 +1,7 @@
 $(function() {
   var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'toothache').replace(/\+/g,' ');
-
+  
+  function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
     if (!gender) { return ''; }
     return '<img class="gender" src="images/'+gender+'.png" />';
@@ -23,12 +24,13 @@ $(function() {
 
   $('#q').attr('value',q);
 
-  $(window).scroll(function(){
+  function loadMore() {
     var page_remaining = $(document).height() - ($(window).height() + $(window).scrollTop());
     if  (page_remaining < 1000){
       fetchNextPage();
     }
-  });
+  }
+  $(window).scroll(loadMore);
 
   var nextPage = false;
   function fetchNextPage() {
@@ -45,15 +47,17 @@ $(function() {
 
     if (response.paging && response.paging.next) {
       nextPage = response.paging.next;
+      loadMore();
     } else {
       $(".waitloading").hide();
+      $('#finished').show();
     }
     $.each(response.data,function(_,post) {
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
         var html = ROW_HTML
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,post.from.name)
-        .replace(/MSG/g, highlight(q,post.message||''))
+        .replace(/MSG/g, highlight(q,encode(post.message||post.name||'')))
         .replace(/SEX/g, gender_img(user.gender))
         .replace(/FROM/g,(user.location && user.location.name) || '');
         $(html).appendTo($('table'));
