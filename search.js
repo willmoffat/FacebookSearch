@@ -1,5 +1,5 @@
 $(function() {
-  var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'rectal surgery').replace(/\+/g,' ');
+  var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'toothache').replace(/\+/g,' ');
 
   function gender_img(gender) {
     if (!gender) { return ''; }
