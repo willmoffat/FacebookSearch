@@ -14,20 +14,50 @@
     '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><img class="profile" src="http://graph.facebook.com/ID/picture"/><br>NAME</a>',
     '  </td>',
     '<td class="msg"><q>MSG</q></td>',
+    '<td class="dump"><pre>DUMP</pre></td>',
     '</tr>'].join('\n');
     
     $('#q').attr('value',q);
     
-    $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, function(response, textStatus) {
+    $(window).scroll(function(){
+            if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+               fetchNextPage();
+            }
+    });
+    
+    var nextPage;
+    function fetchNextPage() {
+        if (nextPage)
+            $.getJSON(nextPage + "&callback=?", handleSearchResults);
+    }
+    
+    $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, handleSearchResults);
+    
+    function handleSearchResults(response, textStatus) {
       //console.warn(response);
+      
+      if (response.paging && response.paging.next)
+          nextPage = response.paging.next;
+      else
+        $(".waitloading").hide();
       jQuery.each(response.data,function(_,post) {
         var html = ROW_HTML
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,post.from.name)
         .replace(/MSG/g, post.message||'');
-        $(html).appendTo($('table'));
+        
+        $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
+            var creepy = "";
+            if (user.gender)
+                creepy += user.gender + " ";
+            if (user.location && user.location.name)
+                creepy += "from " + user.location.name + " ";
+            html = html.replace(/DUMP/, creepy);
+            
+            $(html).appendTo($('table'));
+        })
       });
-    });
+    }
   });
   </script>
 
@@ -54,9 +84,9 @@
   <div id="body">
     <table></table>
   </div>
-
+  
   <div id="footer">
-
+      <img src='spinner.gif' class='waitloading'>
   </div>    
 </body>
 </html>
