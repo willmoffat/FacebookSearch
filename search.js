@@ -5,6 +5,7 @@ $(function() {
   document.location.search.replace(/[?&]([^&=]+)=([^&]+)/g,function(_,key,val) { params[key]=decodeURIComponent(val).replace(/\+/g,' '); });
   params.q      = params.q      || examples[0];
   params.gender = params.gender || 'any';
+  params.maxlen = params.maxlen || 500;
    
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
@@ -75,8 +76,9 @@ $(function() {
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
         var classname =  gender2class(user.gender);
         var body = post.message + " " + (post.caption || "") +" " + (post.description || "") + " " +(post.name || "");
-        if (body.length > 500)
-            body = body.slice(0,500) = '...';
+        if (body.length > params.maxlen) {
+            body = body.slice(0,params.maxlen-3) + '...';
+        }
         var html = ROW_HTML
         .replace(/ROWCLASS/g, classname)
         .replace(/ID/g,  post.from.id)
