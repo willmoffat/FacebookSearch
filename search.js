@@ -5,6 +5,11 @@ $(function() {
     if (!gender) { return ''; }
     return '<img class="gender" src="images/'+gender+'.png" />';
   }
+  function highlight(q,text) {
+    var re = new RegExp('\\b'+ q.replace(/[^a-z0-9]+/gi,'|') + '\\b', 'g');
+    return text.replace(re,'<b>$&</b>');
+  }
+  
   var ROW_HTML=['',
   '<tr>',
   '  <td class="person">',
@@ -48,7 +53,7 @@ $(function() {
         var html = ROW_HTML
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,post.from.name)
-        .replace(/MSG/g, post.message||'')
+        .replace(/MSG/g, highlight(q,post.message||''))
         .replace(/SEX/g, gender_img(user.gender))
         .replace(/FROM/g,(user.location && user.location.name) || '');
         $(html).appendTo($('table'));
