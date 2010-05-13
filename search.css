@@ -1,0 +1,9 @@
+#header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
+a { text-decoration:none; }
+.profile {  max-height: 200px; overflow:hidden;}
+.profile img { border: thin solid gray; padding: 2px; }
+ul { list-style:none; }
+q { padding: 1em; }
+td { padding-left:1em; padding-bottom:2em; vertical-align: top; font-family: Tahoma, sans-serif; font-size: 18px;}
+td.person { width:80px; text-align:center;}
+td.msg { width:30em; overflow:hidden;}
