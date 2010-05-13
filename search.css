@@ -1,5 +1,6 @@
 #header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
 a { text-decoration:none; }
+.gender { float:left; margin-right: 0.5em; }
 .profile {  max-height: 200px; overflow:hidden;}
 .profile img { border: thin solid gray; padding: 2px; }
 ul { list-style:none; }

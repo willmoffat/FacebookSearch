@@ -1,14 +1,18 @@
 $(function() {
   var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'rectal surgery').replace(/\+/g,' ');
 
+  function gender_img(gender) {
+    if (!gender) { return ''; }
+    return '<img class="gender" src="images/'+gender+'.png" />';
+  }
   var ROW_HTML=['',
   '<tr>',
   '  <td class="person">',
   '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
   '  </td>',
   '<td class="msg">',
-  '  <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
-  '  SEX FROM <p><q>MSG</q></q>',
+  '  SEX <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
+  '  FROM <p><q>MSG</q></q>',
   '</td>',
   '</tr>'].join('\n');
 
@@ -45,7 +49,7 @@ $(function() {
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,post.from.name)
         .replace(/MSG/g, post.message||'')
-        .replace(/SEX/g, user.gender ? '('+user.gender+')' : '')
+        .replace(/SEX/g, gender_img(user.gender))
         .replace(/FROM/g,(user.location && user.location.name) || '');
         $(html).appendTo($('table'));
       });

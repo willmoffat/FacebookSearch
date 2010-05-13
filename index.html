@@ -2,78 +2,10 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="search.css" media="all">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-  <script>
-
-  $(function() {
-    var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'rectal surgery').replace(/\+/g,' ');
-
-    var ROW_HTML=['',
-    '<tr>',
-    '  <td class="person">',
-    '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
-    '  </td>',
-    '<td class="msg">',
-    '  <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
-    '  SEX FROM <p><q>MSG</q></q>',
-    '</td>',
-    '</tr>'].join('\n');
-    
-    $('#q').attr('value',q);
-    
-    $(window).scroll(function(){
-            var page_remaining = $(document).height() - ($(window).height() + $(window).scrollTop());
-            if  (page_remaining < 1000){
-               fetchNextPage();
-            }
-    });
-    
-    var nextPage = false;
-    function fetchNextPage() {
-        if (nextPage) {
-            $.getJSON(nextPage + "&callback=?", handleSearchResults);
-            nextPage = false;
-        }
-    }
-    
-    $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, handleSearchResults);
-    
-    function handleSearchResults(response, textStatus) {
-      //console.warn(response);
-      
-      if (response.paging && response.paging.next) {
-        nextPage = response.paging.next;
-      } else {
-        $(".waitloading").hide();
-      }
-      $.each(response.data,function(_,post) {
-        $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
-           var html = ROW_HTML
-              .replace(/ID/g,  post.from.id)
-              .replace(/NAME/g,post.from.name)
-              .replace(/MSG/g, post.message||'')
-              .replace(/SEX/g, user.gender ? '('+user.gender+')' : '')
-              .replace(/FROM/g,(user.location && user.location.name) || '');
-           $(html).appendTo($('table'));
-        });
-      });
-    }
-  });
-  </script>
-
+  <script src="search.js"></script>
   <title>Facebook Search</title>
-
-  <style>
-  #header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
-  a { text-decoration:none; }
-  .profile {  max-height: 200px; overflow:hidden;}
-  .profile img { border: thin solid gray; padding: 2px; }
-  ul { list-style:none; }
-  q { padding: 1em; }
-  td { padding-left:1em; padding-bottom:2em; vertical-align: top; font-family: Tahoma, sans-serif; font-size: 18px;}
-  td.person { width:80px; text-align:center;}
-  td.msg { width:30em; overflow:hidden;}
-  </style>
 </head>
 <body>
   <div id="header">
@@ -86,9 +18,9 @@
   <div id="body">
     <table></table>
   </div>
-  
+
   <div id="footer">
-      <img src='spinner.gif' class='waitloading'>
+    <img src='images/spinner.gif' class='waitloading'>
   </div>    
 </body>
 </html>
