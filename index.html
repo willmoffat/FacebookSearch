@@ -11,10 +11,12 @@
     var ROW_HTML=['',
     '<tr>',
     '  <td class="person">',
-    '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><img class="profile" src="http://graph.facebook.com/ID/picture"/><br>NAME</a>',
+    '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
     '  </td>',
-    '<td class="msg"><q>MSG</q></td>',
-    '<td class="dump"><pre>DUMP</pre></td>',
+    '<td class="msg">',
+    '  <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
+    '  SEX FROM <p><q>MSG</q></q>',
+    '</td>',
     '</tr>'].join('\n');
     
     $('#q').attr('value',q);
@@ -27,8 +29,9 @@
     
     var nextPage;
     function fetchNextPage() {
-        if (nextPage)
-            $.getJSON(nextPage + "&callback=?", handleSearchResults);
+      if (nextPage) {
+        $.getJSON(nextPage + "&callback=?", handleSearchResults);
+      }
     }
     
     $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, handleSearchResults);
@@ -36,26 +39,21 @@
     function handleSearchResults(response, textStatus) {
       //console.warn(response);
       
-      if (response.paging && response.paging.next)
-          nextPage = response.paging.next;
-      else
+      if (response.paging && response.paging.next) {
+        nextPage = response.paging.next;
+      } else {
         $(".waitloading").hide();
-      jQuery.each(response.data,function(_,post) {
-        var html = ROW_HTML
-        .replace(/ID/g,  post.from.id)
-        .replace(/NAME/g,post.from.name)
-        .replace(/MSG/g, post.message||'');
-        
+      }
+      $.each(response.data,function(_,post) {
         $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
-            var creepy = "";
-            if (user.gender)
-                creepy += user.gender + " ";
-            if (user.location && user.location.name)
-                creepy += "from " + user.location.name + " ";
-            html = html.replace(/DUMP/, creepy);
-            
-            $(html).appendTo($('table'));
-        })
+           var html = ROW_HTML
+              .replace(/ID/g,  post.from.id)
+              .replace(/NAME/g,post.from.name)
+              .replace(/MSG/g, post.message||'')
+              .replace(/SEX/g, user.gender ? '('+user.gender+')' : '')
+              .replace(/FROM/g,(user.location && user.location.name) || '');
+           $(html).appendTo($('table'));
+        });
       });
     }
   });
@@ -64,13 +62,15 @@
   <title>Facebook Search</title>
 
   <style>
-  #header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em;}
+  #header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
   a { text-decoration:none; }
-  img.profile { border: thin solid gray; padding: 2px; width: 50px; height: 50px; }
+  .profile {  max-height: 200px; overflow:hidden;}
+  .profile img { border: thin solid gray; padding: 2px; }
   ul { list-style:none; }
-  td { padding-bottom:2em; vertical-align: top; font-family: Tahoma, sans-serif; font-size: 13px;}
+  q { padding: 1em; }
+  td { padding-left:1em; padding-bottom:2em; vertical-align: top; font-family: Tahoma, sans-serif; font-size: 18px;}
   td.person { width:80px; text-align:center;}
-  td.msg { width:30em; }
+  td.msg { width:30em; overflow:hidden;}
   </style>
 </head>
 <body>
