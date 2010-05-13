@@ -1,5 +1,5 @@
 $(function() {
-  var q = decodeURIComponent(document.location.search.split(/=/)[1] || '"stupid boss"').replace(/\+/g,' ');
+  var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'stupid boss').replace(/\+/g,' ');
   
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
