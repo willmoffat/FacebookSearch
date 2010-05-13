@@ -1,5 +1,7 @@
 $(function() {
-  var q = decodeURIComponent(document.location.search.split(/=/)[1] || 'rectal exam').replace(/\+/g,' ');
+  var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "it's a secret"];
+  
+  var q = decodeURIComponent(document.location.search.split(/=/)[1] || examples[0]).replace(/\+/g,' ');
   
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
@@ -7,9 +9,10 @@ $(function() {
     return '<img class="gender" src="images/'+gender+'.png" />';
   }
   function highlight(q,text) {
-    q = q.replace(/[^a-z0-9]+/gi,'|') // words seperated by |
-         .replace(/^\||\/$/g,'');     // remove leading and trailing |
-    var re = new RegExp('\\b'+ q + '\\b', 'gi');
+    q = q.replace(/^\s+|\s+$/g,'')                       // whitespace trim
+         .replace(/[\/\.\*\+\?\|\(\)\[\]\{\}\\]/g,'\$&') // escape regexp chars
+         .replace(/\s+/gi,'|');                          // seperate words with |
+    var re = new RegExp('\\b('+ q + ')\\b', 'gi');
     return text.replace(re,'<b>$&</b>');
   }
   
@@ -25,7 +28,8 @@ $(function() {
   '</tr>'].join('\n');
 
   $('#q').attr('value',q);
-
+  $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
+  
   function loadMore() {
     var page_remaining = $(document).height() - ($(window).height() + $(window).scrollTop());
     if  (page_remaining < 1000){
