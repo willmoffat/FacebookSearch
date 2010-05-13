@@ -1,6 +1,12 @@
-body,input { font-family: Tahoma, sans-serif; font-size: 18px; }
-#header { background-color: #F0F0F0; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
-#credits { position: absolute; right: 1em; top: 1em; font-size:10pt; text-align:right;}
+body,input { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
+#header { background-color: #DDD; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
+#header iframe { margin-left: 2em; }
+#sbox { border: 2px solid gray; padding: 2px; margin-right:2em; }
+#q,#search { margin:0px; border:none; padding:2px; }
+#q {background-color: white; }
+#search {cursor:pointer; border-left:thin solid gray; background-color:#ddd;}
+
+#credits { position: absolute; right: 1em; top: 1.5em; font-size:10pt; text-align:right;}
 a { text-decoration:none; }
 .gender { float:left; margin-right: 0.5em; }
 .profile {  max-height: 200px; overflow:hidden;}

@@ -17,11 +17,13 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-</script>"
+</script>
   <div id="header">
     <form action="">
-      <label>Search Facebook: <input id="q" name="q" type="text"/></label>
-      <input type="submit" value="Go!"/>
+      <label for="q">Search Facebook: </label>
+      <span id="sbox"><input id="q" name="q" type="text"/><input id="search" type="submit" value="Search"/></span>
+      <a href="http://www.google.com/search?q=facebook+Protect+Your+Privacy">Fix your privacy settings</a>
+      <iframe src="http://www.facebook.com/plugins/like.php?href=http%253A%252F%252Fwillmoffat.github.com%252FFacebookSearch%252F&amp;layout=button_count&amp;show_faces=true&amp;width=150&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150; height:21px;" allowTransparency="true"></iframe>
     </form>
     <div id="credits">
       Code: <a href="http://github.com/willmoffat">willmoffat</a> and  <a href="http://github.com/ricitc">ricitc</a>.<br>
