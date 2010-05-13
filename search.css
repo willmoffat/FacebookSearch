@@ -1,4 +1,4 @@
-body,input { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
+body,input,.fix { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
 #header { background-color: #DDD; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
 #header iframe { margin-left: 2em; }
 #sbox { border: 2px solid gray; padding: 2px; margin-right:2em; }
@@ -8,7 +8,8 @@ body,input { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
 #examples { font-size:80%; margin-top:1em; }
 #examples a { padding-right: 0.7em; }
 
-#credits { position: absolute; right: 1em; top: 1.5em; font-size:10pt; text-align:right;}
+#credits { position: absolute; right: 1em; top: 0.7em; font-size:10pt; text-align:right;}
+iframe { border:none; overflow:hidden; width:100px; height:21px; margin:5px;}
 a { text-decoration:none; }
 .gender { float:left; margin-right: 0.5em; }
 .profile {  max-height: 200px; overflow:hidden;}
@@ -19,3 +20,9 @@ td.person { width:80px; text-align:center;}
 td.msg { width:30em; overflow:hidden;}
 .waitloading,#finished  { padding: 2em 4em; }
 #finished { display:none; }
+
+table.only-gender-male tr.gender-female { display:none; }
+table.only-gender-male tr.gender-any    { display:none; }
+
+table.only-gender-female tr.gender-male { display:none; }
+table.only-gender-female tr.gender-any  { display:none; }

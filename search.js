@@ -1,7 +1,9 @@
 $(function() {
   var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "it's a secret"];
   
-  var q = decodeURIComponent(document.location.search.split(/=/)[1] || examples[0]).replace(/\+/g,' ');
+  var params={};
+  document.location.search.replace(/[?&]([^&=]+)=([^&]+)/g,function(_,key,val) { params[key]=decodeURIComponent(val).replace(/\+/g,' '); });
+  params.q = params.q || examples[0];
   
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
@@ -17,7 +19,7 @@ $(function() {
   }
   
   var ROW_HTML=['',
-  '<tr>',
+  '<tr class="ROWCLASS">',
   '  <td class="person">',
   '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
   '  </td>',
@@ -27,7 +29,16 @@ $(function() {
   '</td>',
   '</tr>'].join('\n');
 
-  $('#q').attr('value',q);
+  function gender2class(gender) { return 'gender-'+(gender || 'any'); }
+
+  function update_gender(gender) {
+    $('table').attr('class','only-'+gender2class(gender));
+  }
+  
+  $('#q').attr('value',params.q);
+  if (params.gender) { $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender); }
+  $('input:radio').click(function() { update_gender($(this).val()); });
+  
   $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
   
   function loadMore() {
@@ -46,7 +57,7 @@ $(function() {
     }
   }
 
-  $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, handleSearchResults);
+  $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':params.q, 'type':'post'}, handleSearchResults);
 
   function handleSearchResults(response, textStatus) {
     //console.warn(response);
@@ -59,11 +70,14 @@ $(function() {
       $('#finished').show();
     }
     $.each(response.data,function(_,post) {
+      if (!post || !post.from || !post.from.id) { return; } //TODO: when does this happen?
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
+        var classname =  gender2class(user.gender);
         var html = ROW_HTML
+        .replace(/ROWCLASS/g, classname)
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,post.from.name)
-        .replace(/MSG/g, highlight(q,encode(post.message||post.name||'')))
+        .replace(/MSG/g, highlight(params.q,encode(post.message||post.name||'')))
         .replace(/SEX/g, gender_img(user.gender))
         .replace(/FROM/g,(user.location && user.location.name) || '');
         $(html).appendTo($('table'));
