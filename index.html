@@ -20,15 +20,18 @@
     $('#q').attr('value',q);
     
     $(window).scroll(function(){
-            if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+            var page_remaining = $(document).height() - ($(window).height() + $(window).scrollTop());
+            if  (page_remaining < 500){
                fetchNextPage();
             }
     });
     
-    var nextPage;
+    var nextPage = false;
     function fetchNextPage() {
-        if (nextPage)
+        if (nextPage) {
             $.getJSON(nextPage + "&callback=?", handleSearchResults);
+            nextPage = false;
+        }
     }
     
     $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':q, 'type':'post'}, handleSearchResults);
