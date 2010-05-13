@@ -1,5 +1,5 @@
 $(function() {
-  var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "it's a secret"];
+  var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "HIV test", "control urges"];
   
   var params={};
   document.location.search.replace(/[?&]([^&=]+)=([^&]+)/g,function(_,key,val) { params[key]=decodeURIComponent(val).replace(/\+/g,' '); });
@@ -74,11 +74,14 @@ $(function() {
       if (!post || !post.from || !post.from.id) { return; } //TODO: when does this happen?
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
         var classname =  gender2class(user.gender);
+        var body = post.message + " " + (post.caption || "") +" " + (post.description || "") + " " +(post.name || "");
+        if (body.length > 500)
+            body = body.slice(0,500) = '...';
         var html = ROW_HTML
         .replace(/ROWCLASS/g, classname)
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,post.from.name)
-        .replace(/MSG/g, highlight(params.q,encode(post.message||post.name||'')))
+        .replace(/MSG/g, highlight(params.q,encode(body)))
         .replace(/SEX/g, gender_img(user.gender))
         .replace(/FROM/g,(user.location && user.location.name) || '');
         $(html).appendTo($('table'));
