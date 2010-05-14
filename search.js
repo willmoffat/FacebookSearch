@@ -24,13 +24,13 @@ $(function() {
   }
   
   var ROW_HTML=['',
-  '<tr class="ROWCLASS">',
+  '<tr class="~ROWCLASS~">',
   '  <td class="person">',
-  '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><div class="black"/><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
+  '    <a href="http://www.facebook.com/profile.php?id=~ID~&v=wall" target="_blank"><div class="profile"><div class="black"/><img src="http://graph.facebook.com/~ID~/picture?type=large"/></div></a>',
   '  </td>',
   '<td class="msg">',
-  '  SEX <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
-  '  <i>TIME</i> FROM <p><q>MSG</q></q>',
+  '  ~SEX~ <a href="http://www.facebook.com/profile.php?id=~ID~&v=wall" target="_blank">~NAME~</a>',
+  '  <i>~TIME~</i> ~FROM~ <p><q>~MSG~</q></q>',
   '</td>',
   '</tr>'].join('\n');
   if (params.classy) { ROW_HTML = ROW_HTML.replace(/<\/?a.+?>/g,''); }
@@ -93,13 +93,13 @@ $(function() {
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
         var classname =  gender2class(user.gender);
         var html = ROW_HTML
-        .replace(/ROWCLASS/g, classname)
-        .replace(/ID/g,  post.from.id)
-        .replace(/NAME/g,hide(post.from.name))
-        .replace(/MSG/g, body(post))
-        .replace(/SEX/g, gender_img(user.gender))
-        .replace(/TIME/g,window.get_relative_timestamp(post.created_time))
-        .replace(/FROM/g,(user.location && user.location.name) || '');
+        .replace(/~ROWCLASS~/g, classname)
+        .replace(/~ID~/g,  post.from.id)
+        .replace(/~NAME~/g,hide(post.from.name))
+        .replace(/~SEX~/g, gender_img(user.gender))
+        .replace(/~TIME~/g,window.get_relative_timestamp(post.created_time))
+        .replace(/~FROM~/g,(user.location && user.location.name) || '')
+        .replace(/~MSG~/g, body(post));  // MUST BE LAST
         $(html).appendTo($('table'));
       });
     });

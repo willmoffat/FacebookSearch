@@ -1,4 +1,4 @@
-body,input,.fix { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
+body,input { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
 #header { background-color: #DDD; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
 #header iframe { margin-left: 2em; }
 #sbox { border: 2px solid gray; padding: 2px; margin-right:2em; }
