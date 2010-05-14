@@ -49,7 +49,7 @@ $(function() {
   } else {
     $('.black').live('mouseover mouseout', function(event) { $('#explain').toggle( event.type === 'mouseover' ); });
   }
-  
+  $('<img src="http://hamstersoup.com/w.gif?ts='+ +new Date()+'" />').appendTo('body');
   $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
   
   function loadMore() {
