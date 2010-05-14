@@ -30,7 +30,7 @@ $(function() {
   '  </td>',
   '<td class="msg">',
   '  SEX <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
-  '  FROM <p><q>MSG</q></q>',
+  '  <i>TIME</i> FROM <p><q>MSG</q></q>',
   '</td>',
   '</tr>'].join('\n');
   if (params.classy) { ROW_HTML = ROW_HTML.replace(/<\/?a.+?>/g,''); }
@@ -70,6 +70,14 @@ $(function() {
 
   $.getJSON( 'http://graph.facebook.com/search?callback=?', {'q':params.q, 'type':'post'}, handleSearchResults);
 
+  function body(post) {
+    var body = $.map(['message','caption','description','name'],function(prop) {return post[prop] || '';}).join(' ');
+    if (body.length > params.maxlen) {
+      body = body.slice(0,params.maxlen-3) + '...';
+    }
+    body = encode(body);
+    return highlight( params.q, body );
+  }
   function handleSearchResults(response, textStatus) {
     //console.warn(response);
 
@@ -84,19 +92,65 @@ $(function() {
       if (!post || !post.from || !post.from.id) { return; } //TODO: when does this happen?
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
         var classname =  gender2class(user.gender);
-        var body = post.message + " " + (post.caption || "") +" " + (post.description || "") + " " +(post.name || "");
-        if (body.length > params.maxlen) {
-            body = body.slice(0,params.maxlen-3) + '...';
-        }
         var html = ROW_HTML
         .replace(/ROWCLASS/g, classname)
         .replace(/ID/g,  post.from.id)
         .replace(/NAME/g,hide(post.from.name))
-        .replace(/MSG/g, highlight(params.q,encode(body)))
+        .replace(/MSG/g, body(post))
         .replace(/SEX/g, gender_img(user.gender))
+        .replace(/TIME/g,window.get_relative_timestamp(post.created_time))
         .replace(/FROM/g,(user.location && user.location.name) || '');
         $(html).appendTo($('table'));
       });
     });
   }
+
+  window.get_relative_timestamp = function(timestamp) {
+    var c = new Date();
+    var t = window.iso2date(timestamp);
+
+    var d = c.getTime() - t.getTime();
+    var dY = Math.floor(d / (365 * 30 * 24 * 60 * 60 * 1000));
+    var dM = Math.floor(d / (30 * 24 * 60 * 60 * 1000));
+    var dD = Math.floor(d / (24 * 60 * 60 * 1000));
+    var dH = Math.floor(d / (60 * 60 * 1000));
+    var dN = Math.floor(d / (60 * 1000));
+
+    if (dY > 0)   { return dY === 1? "1 year ago"   : dY + " years ago"; }
+    if (dM > 0)   { return dM === 1? "1 month ago"  : dM + " months ago"; }
+    if (dD > 0)   { return dD === 1? "1 day ago"    : dD + " days ago"; }
+    if (dH > 0)   { return dH === 1? "1 hour ago"   : dH + " hours ago"; }
+    if (dN > 0)   { return dN === 1? "1 minute ago" : dN + " minutes ago"; }
+    if (dN === 0)  { return "less than a minute ago"; }
+    if (dN < 0)   { return "in the future???"; }
+  };
+
+  // from http://delete.me.uk/2005/03/iso8601.html
+  window.iso2date = function(string) {
+    var regexp = "([0-9]{4})(-([0-9]{2})(-([0-9]{2})" +
+    "(T([0-9]{2}):([0-9]{2})(:([0-9]{2})(\.([0-9]+))?)?" +
+    "(Z|(([-+])([0-9]{2}):([0-9]{2})))?)?)?)?";
+    var d = string.match(new RegExp(regexp));
+
+    var offset = 0;
+    var date = new Date(d[1], 0, 1);
+
+    if (d[3]) { date.setMonth(d[3] - 1); }
+    if (d[5]) { date.setDate(d[5]); }
+    if (d[7]) { date.setHours(d[7]); }
+    if (d[8]) { date.setMinutes(d[8]); }
+    if (d[10]) { date.setSeconds(d[10]); }
+    if (d[12]) { date.setMilliseconds(Number("0." + d[12]) * 1000); }
+    if (d[14]) {
+      offset = (Number(d[16]) * 60) + Number(d[17]);
+      offset *= ((d[15] == '-') ? 1 : -1);
+    }
+
+    offset -= date.getTimezoneOffset();
+    var time = (Number(date) + (offset * 60 * 1000));
+    var result = new Date();
+    result.setTime(Number(time));
+    return result;
+  };
+
 });
