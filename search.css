@@ -20,7 +20,7 @@ body { font-size: 62.5%; line-height: 1; color: #000; background: #fff url(image
 #tag h1 { padding: 14px 0; font-size: 13px; font-weight: bold; color: #203360; }
 #learnwhy { display: block; position: absolute; top: 10px; right: 0; }
 
-#updates { margin: 30px; padding: 10px 15px; border: 1px solid #ccc; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
+#updates, #about { margin: 30px; padding: 10px 15px; border: 1px solid #ccc; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
 #updates .header { font-size: 16px; font-weight: bold; color: #000; }
 
 input[type=text] {border: 1px solid #bfc6d9; font-size: 13px; padding: 2px; }
@@ -37,3 +37,13 @@ input[type=radio] { margin: 0 0 0 10px; }
 .msg { margin: 0 0 0 215px; font-size: 13px; line-height: 1.3em; }
 .msg-metadata { font-size: 11px; color: #666; padding: 5px 0 0 0;  }
 #finished { text-align: center; font-size: 16px; font-weight: bold; display: none; }
+#returnlink { display: block; margin: 30px; text-align: center; font-size: 16px; font-weight: bold; }
+
+#about { font-size: 13px; }
+#about li { margin: 16px 0 12px 12px; line-height: 1.3; }
+#about strong { font-weight: bold; }
+#about p { margin: 12px; }
+
+
+
+
