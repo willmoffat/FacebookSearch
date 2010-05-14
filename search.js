@@ -1,12 +1,15 @@
 $(function() {
   var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "HIV test", "control urges"];
   
-  var params={};
+  var params={
+    q:  examples[0],  // query str
+    gender:  'any',   // male female any
+    maxlen:  500,     // max message len
+    classy: false     // don't hide profile pics, names, links
+  };
   document.location.search.replace(/[?&]([^&=]+)=([^&]+)/g,function(_,key,val) { params[key]=decodeURIComponent(val).replace(/\+/g,' '); });
-  params.q      = params.q      || examples[0];
-  params.gender = params.gender || 'any';
-  params.maxlen = params.maxlen || 500;
    
+  function hide(name)   { return params.classy ? name.replace(/[a-z]/g,'-') : name; } // just show initials unless in asehole mode
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
     if (!gender) { return ''; }
@@ -23,13 +26,14 @@ $(function() {
   var ROW_HTML=['',
   '<tr class="ROWCLASS">',
   '  <td class="person">',
-  '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
+  '    <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank"><div class="profile"><div class="black"/><img src="http://graph.facebook.com/ID/picture?type=large"/></div></a>',
   '  </td>',
   '<td class="msg">',
   '  SEX <a href="http://www.facebook.com/profile.php?id=ID&v=wall" target="_blank">NAME</a>',
   '  FROM <p><q>MSG</q></q>',
   '</td>',
   '</tr>'].join('\n');
+  if (params.classy) { ROW_HTML = ROW_HTML.replace(/<\/?a.+?>/g,''); }
 
   function gender2class(gender) { return 'gender-'+(gender || 'any'); }
 
@@ -40,6 +44,11 @@ $(function() {
   $('#q').attr('value',params.q);
   $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender);
   $('input:radio').click(function() { update_gender($(this).val()); });
+  if (!params.classy) {
+    $('body').addClass('asshole');
+  } else {
+    $('.black').live('mouseover mouseout', function(event) { $('#explain').toggle( event.type === 'mouseover' ); });
+  }
   
   $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
   
@@ -82,7 +91,7 @@ $(function() {
         var html = ROW_HTML
         .replace(/ROWCLASS/g, classname)
         .replace(/ID/g,  post.from.id)
-        .replace(/NAME/g,post.from.name)
+        .replace(/NAME/g,hide(post.from.name))
         .replace(/MSG/g, highlight(params.q,encode(body)))
         .replace(/SEX/g, gender_img(user.gender))
         .replace(/FROM/g,(user.location && user.location.name) || '');
