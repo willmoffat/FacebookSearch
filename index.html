@@ -1,12 +1,11 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-
-  <meta charset="UTF-8">
+<!doctype html>
+<html lang="en">
+	<head>
+	<title>Openbook - Connect and share whether you want to or not</title>
+	<meta charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="search.css" media="all">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
   <script src="search.js"></script>
-  <title>Facebook Search 2</title>
 </head>
 <body>
   <script type="text/javascript">
@@ -18,29 +17,45 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-</script>
-  <div id="header">
-    <form action="">
-      <label for="q">Search Facebook: </label>
-      <span id="sbox"><input id="q" name="q" type="text"/><input id="search" type="submit" value="Search"/></span>
-      Gender:
-      <label><input type="radio" name="gender" value="male" />   <img src="images/male-small.png" alt="Male" title="Male"></label>
-      <label><input type="radio" name="gender" value="female" /> <img src="images/female-small.png" alt="Female" title="Female"></label>
-      <label><input type="radio" name="gender" value="any" />    any</label>
-    </form>
-    <div id="credits">
-      <a class="fix" href="about.html">About FacebookSearch</a><br>
-      <iframe src="http://www.facebook.com/plugins/like.php?href=http%253A%252F%252Fwillmoffat.github.com%252FFacebookSearch%252F&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+  </script>
+
+  <div id="container">
+    <div id="head">		
+      <img src="images/logo-openbook.png" alt="openbook" id="logo" width="184" height="45" />  
+        <iframe id="like" src="http://www.facebook.com/plugins/like.php?href=http%253A%252F%252Fwillmoffat.github.com%252FFacebookSearch%252F&amp;layout=button_count&amp;show_faces=true&amp;width=100&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+      <div id="quote">
+        <a href="http://www.businessinsider.com/well-these-new-zuckerberg-ims-wont-help-facebooks-privacy-problems-2010-5">&#8220;They 'trust me'. Dumb fucks.&#8221;</a>
+      </div>
+  	</div>
+  	<div id="tag">
+  	  <h1>Facebook helps you connect and share with the people in your life.  Whether you want to or not.</h1>
+  	  <a href="about.html" id="learnwhy">
+  	    <img src="images/button-learnwhy.png" alt="Learn why this is bad!" width="156" height="25" />
+  	  </a>
+  	</div>
+  
+    <div id="body">		
+      <div id="updates">
+        <form action="">
+          <label class="header" for="q">Search Facebook updates: </label>
+          <input id="q" name="q" type="text"/>
+          <input id="search" type="image" src="images/button-search.png" alt="button-search" width="56" height="25" />
+          <label><input type="radio" name="gender" value="male" /> <img src="images/male-small.png" alt="Male" title="Male"></label>
+          <label><input type="radio" name="gender" value="female" /> <img src="images/female-small.png" alt="Female" title="Female"></label>
+          <label><input type="radio" name="gender" value="any" /> all</label>
+        </form>
+        <div id="examples">Examples: 
+          <a href="">hi</a>
+          <a href="">hi</a>
+        </div>
+        
+        <div id="results"></div>
+        <div class="waitloading"><img src='images/spinner.gif'></div>
+        <div id="finished">No more results. Try another search!</div>
+        </div>
+      </div>
     </div>
-    <div id="examples">Examples: </div>
-  </div>
-
-  <div id="body">
-    <table></table>
-  </div>
-
-
-  <img src='images/spinner.gif' class='waitloading'>
-  <p id="finished">No more results</p>
-</body>
+	</body>
 </html>
+
+	

@@ -24,21 +24,22 @@ $(function() {
   }
   
   var ROW_HTML=['',
-  '<tr class="~ROWCLASS~">',
-  '  <td class="person">',
-  '    <a href="http://www.facebook.com/profile.php?id=~ID~&v=wall" target="_blank"><div class="profile"><div class="black"/><img src="http://graph.facebook.com/~ID~/picture?type=large"/></div></a>',
-  '  </td>',
+  '<div class="update ~ROWCLASS~">',
+  '  <div class="person">',
+  '    <a href="http://www.facebook.com/profile.php?id=~ID~&v=wall" target="_blank"><div class="black"/><img src="http://graph.facebook.com/~ID~/picture?type=large"/></div></a>',
+  '  </div>',
   '<td class="msg">',
-  '  ~SEX~ <a href="http://www.facebook.com/profile.php?id=~ID~&v=wall" target="_blank">~NAME~</a>',
-  '  <i>~TIME~</i> ~FROM~ <p><q>~MSG~</q></q>',
-  '</td>',
-  '</tr>'].join('\n');
+  '  <p>~SEX~ <b><a href="http://www.facebook.com/profile.php?id=~ID~&v=wall" target="_blank">~NAME~</a></b>',
+  '  ~MSG~ </p>',
+  ' <span class="msg-metadata">~TIME~ ~FROM~</span>',
+  '</div>',
+  '</div>'].join('\n');
   if (params.classy) { ROW_HTML = ROW_HTML.replace(/<\/?a.+?>/g,''); }
 
   function gender2class(gender) { return 'gender-'+(gender || 'any'); }
 
   function update_gender(gender) {
-    $('table').attr('class','only-'+gender2class(gender));
+    $('#results').attr('class','only-'+gender2class(gender));
   }
   
   $('#q').attr('value',params.q);
@@ -100,7 +101,7 @@ $(function() {
         .replace(/~TIME~/g,window.get_relative_timestamp(post.created_time))
         .replace(/~FROM~/g,(user.location && user.location.name) || '')
         .replace(/~MSG~/g, body(post));  // MUST BE LAST
-        $(html).appendTo($('table'));
+        $(html).appendTo($('#results'));
       });
     });
   }

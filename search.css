@@ -1,33 +1,39 @@
-body,input { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
-#header { background-color: #DDD; border-bottom: 1px solid #CCC; padding: 1em; margin-bottom:1em;}
-#header iframe { margin-left: 2em; }
-#sbox { border: 2px solid gray; padding: 2px; margin-right:2em; }
-#q,#search { margin:0px; border:none; padding:2px; }
-#q {background-color: white; }
-#search {cursor:pointer; border-left:thin solid gray; background-color:#ddd;}
-label>img { margin-right:5px; }
-#examples { font-size:80%; margin-top:1em; }
-#examples a { padding-right: 0.7em; }
-#explain { background-color: white; border: thin solid gray; color: red; display: none; left: 200px; padding: 1em; position: fixed; top: 100px; z-index: 100;}
+* { margin: 0; padding: 0; border: 0; outline: 0; vertical-align: baseline; 
+    font-family: inherit; font-weight: inherit;  font-style: inherit; font-size: inherit; }
+table { border-collapse: collapse; border-spacing: 0; }
+ul, ol { list-style: none; }
 
-#credits { position: absolute; right: 1em; top: 0.7em; font-size:10pt; text-align:right;}
-iframe { border:none; overflow:hidden; width:100px; height:21px; margin:5px;}
-a { text-decoration:none; }
-.gender { float:left; margin-right: 0.5em; }
-.profile {  max-height: 200px; overflow:hidden; position:relative; }
-.profile img { border: thin solid gray; padding: 2px; }
-.black { background-color: black; height: 80px; left: 30px; position: absolute; top: 50px; width: 150px;}
-body.asshole .black {display:none;}
+a:link { text-decoration: none; color: #3b5998; }
+a:visited { text-decoration: none; color: #3b5998; }
+a:link:hover, a:visited:hover { text-decoration: underline; color: #3b5998; }
+b { font-weight: bold; }
+body { font-size: 62.5%; line-height: 1; color: #000; background: #fff url(images/bg.png) repeat-x; font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;}
 
-ul { list-style:none; }
-td { padding-left:1em; padding-bottom:2em; vertical-align: top; }
-td.person { width:80px; text-align:center;}
-td.msg { width:30em; overflow:hidden;}
-.waitloading,#finished  { padding: 2em 4em; }
-#finished { display:none; }
+#container { margin: 0 auto; width: 875px; }
 
-table.only-gender-male tr.gender-female { display:none; }
-table.only-gender-male tr.gender-any    { display:none; }
+#head { position: relative; margin: 0 15px; }
+#like { position: absolute; top: 42px; left: 215px; height: 24px; width: 100px; }
+#quote { position: absolute; top: 35px; right: 0; height: 24px; width: 300px; text-align: right; }
+#quote a { color: #fff; font-weight: bold; font-size: 13px; }
+#logo { margin: 30px 0 10px 0; }
+#tag { position: relative; margin: 0 15px; }
+#tag h1 { padding: 14px 0; font-size: 13px; font-weight: bold; color: #203360; }
+#learnwhy { display: block; position: absolute; top: 10px; right: 0; }
 
-table.only-gender-female tr.gender-male { display:none; }
-table.only-gender-female tr.gender-any  { display:none; }
+#updates { margin: 30px; padding: 10px 15px; border: 1px solid #ccc; -webkit-border-radius: 3px; -moz-border-radius: 3px; }
+#updates .header { font-size: 16px; font-weight: bold; color: #000; }
+
+input[type=text] {border: 1px solid #bfc6d9; font-size: 13px; padding: 2px; }
+input[type=radio] { margin: 0 0 0 10px; }
+#search { vertical-align: bottom; }
+#updates form { border-bottom: 1px solid #ccc; padding: 0 0 10px 0; }
+#examples { padding: 10px 0 20px 0; }
+#examples a { padding: 0 0 0 10px; }
+#results { padding: 10px; }
+.waitloading {  clear: both; text-align: center; }
+.update { padding: 0 0 20px 0; clear: both; }
+.person { float: left; width: 215px; margin: 0 0 40px 0; }
+.person img { padding: 1px; border: #ccc 1px solid; }
+.msg { margin: 0 0 0 215px; font-size: 13px; line-height: 1.3em; }
+.msg-metadata { font-size: 11px; color: #666; padding: 5px 0 0 0;  }
+#finished { text-align: center; font-size: 16px; font-weight: bold; display: none; }
