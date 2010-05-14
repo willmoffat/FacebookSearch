@@ -6,16 +6,19 @@ body,input,.fix { font-family: Tahoma, sans-serif; font-size: 18px; margin:0px;}
 #q {background-color: white; }
 #search {cursor:pointer; border-left:thin solid gray; background-color:#ddd;}
 label>img { margin-right:5px; }
-.black { height: 100px; width:100px; background-color:black; position: relative; top: 50px; display:none;}
 #examples { font-size:80%; margin-top:1em; }
 #examples a { padding-right: 0.7em; }
+#explain { background-color: white; border: thin solid gray; color: red; display: none; left: 200px; padding: 1em; position: fixed; top: 100px; z-index: 100;}
 
 #credits { position: absolute; right: 1em; top: 0.7em; font-size:10pt; text-align:right;}
 iframe { border:none; overflow:hidden; width:100px; height:21px; margin:5px;}
 a { text-decoration:none; }
 .gender { float:left; margin-right: 0.5em; }
-.profile {  max-height: 200px; overflow:hidden;}
+.profile {  max-height: 200px; overflow:hidden; position:relative; }
 .profile img { border: thin solid gray; padding: 2px; }
+.black { background-color: black; height: 80px; left: 30px; position: absolute; top: 50px; width: 150px;}
+body.asshole .black {display:none;}
+
 ul { list-style:none; }
 td { padding-left:1em; padding-bottom:2em; vertical-align: top; }
 td.person { width:80px; text-align:center;}

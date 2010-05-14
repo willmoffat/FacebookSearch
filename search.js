@@ -43,6 +43,11 @@ $(function() {
   $('#q').attr('value',params.q);
   $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender);
   $('input:radio').click(function() { update_gender($(this).val()); });
+  if (params.asshole) {
+    $('body').addClass('asshole');
+  } else {
+    $('.black').live('mouseover mouseout', function(event) { $('#explain').toggle( event.type === 'mouseover' ); });
+  }
   
   $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
   
