@@ -1,5 +1,5 @@
 $(function() {
-  var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "HIV test", "control urges"];
+  var examples = ["cheated test", "don't tell anyone", "rectal exam", "HIV test", "control urges", "lost virginity", "playing hooky"];
   
   var params={
     q:  examples[0],  // query str
