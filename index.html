@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-	<head>
+<head>
 	<title>Openbook - Connect and share whether you want to or not</title>
 	<meta charset="utf-8" />
   <link rel="stylesheet" type="text/css" href="search.css" media="all">
@@ -19,13 +19,13 @@
     
     
     if (/willmoffat\.github\.com/.test(window.location.host)) {
-      //We just added the DNS records, so they might not have propagated.  Remove if you
-      //don't want it to redirect.
+    //We just added the DNS records, so they might not have propagated.  Remove if you
+    //don't want it to redirect.
       var redirect = document.createElement('script'); redirect.type = "text/javscript"; redirect.async = true;
       redirect.src = "http://youropenbook.org/redirect_if_dns.js"; s.parentNode.insertBefore(redirect, s);
     }
   })();
-  </script>
+</script>
 
   <div id="container">
     <div id="head">		
@@ -44,23 +44,23 @@
   
     <div id="body">		
       <div id="updates">
-        <form action="">
+    <form action="">
           <label class="header" for="q">Search Facebook updates: </label>
           <input id="q" name="q" type="text"/>
           <input id="search" type="image" src="images/button-search.png" alt="button-search" width="56" height="25" />
-          <label><input type="radio" name="gender" value="male" /> <img src="images/male-small.png" alt="Male" title="Male"></label>
-          <label><input type="radio" name="gender" value="female" /> <img src="images/female-small.png" alt="Female" title="Female"></label>
+      <label><input type="radio" name="gender" value="male" />   <img src="images/male-small.png" alt="Male" title="Male"></label>
+      <label><input type="radio" name="gender" value="female" /> <img src="images/female-small.png" alt="Female" title="Female"></label>
           <label><input type="radio" name="gender" value="any" /> all</label>
-        </form>
-        <div id="examples">Examples: </div>
-        
+    </form>
+    <div id="examples">Examples: </div>
+
         <div id="results"></div>
         <div class="waitloading"><img src='images/spinner.gif'></div>
         <div id="finished">No more results. Try another search!</div>
-        </div>
+  </div>
       </div>
     </div>
 	</body>
 </html>
 
-	
+
