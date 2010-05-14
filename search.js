@@ -17,6 +17,7 @@ $(function() {
   }
   function highlight(q,text) {
     q = q.replace(/^\s+|\s+$/g,'')                       // whitespace trim
+         .replace(/\"/g,'')                              // remove quote marks
          .replace(/[\/\.\*\+\?\|\(\)\[\]\{\}\\]/g,'\$&') // escape regexp chars
          .replace(/\s+/gi,'|');                          // seperate words with |
     var re = new RegExp('\\b('+ q + ')\\b', 'gi');

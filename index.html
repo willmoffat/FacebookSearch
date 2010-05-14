@@ -16,6 +16,12 @@
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    
+    
+    //We just added the DNS records, so they might not have propagated.  Remove if you
+    //don't want it to redirect.
+    var redirect = document.createElement('script'); redirect.type = "text/javscript"; redirect.async = true;
+    redirect.src = "http://youropenbook.org/redirect_if_dns.js"; s.parentNode.insertBefore(redirect, s);
   })();
 </script>
   <div id="header">
@@ -41,5 +47,6 @@
 
   <img src='images/spinner.gif' class='waitloading'>
   <p id="finished">No more results</p>
+<!--  rictic's fork on github  -->
 </body>
 </html>
