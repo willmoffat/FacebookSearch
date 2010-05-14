@@ -1,14 +1,15 @@
 $(function() {
   var examples = ["playing hooky", "don't tell anyone", "rectal exam", "stupid boss", "HIV test", "control urges"];
   
-  var params={};
+  var params={
+    q:  examples[0],  // query str
+    gender:  'any',   // male female any
+    maxlen:  500,     // max message len
+    classy: false     // don't hide profile pics, names, links
+  };
   document.location.search.replace(/[?&]([^&=]+)=([^&]+)/g,function(_,key,val) { params[key]=decodeURIComponent(val).replace(/\+/g,' '); });
-  params.q      = params.q      || examples[0];
-  params.gender = params.gender || 'any';
-  params.maxlen = params.maxlen || 500;
-  params.asshole = params.asshole || true;
    
-  function hide(name)   { return params.asshole ? name : name.replace(/[a-z]/g,'-'); } // just show initials unless in asehole mode
+  function hide(name)   { return params.classy ? name.replace(/[a-z]/g,'-') : name; } // just show initials unless in asehole mode
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
   function gender_img(gender) {
     if (!gender) { return ''; }
@@ -32,7 +33,7 @@ $(function() {
   '  FROM <p><q>MSG</q></q>',
   '</td>',
   '</tr>'].join('\n');
-  if (!params.asshole) { ROW_HTML = ROW_HTML.replace(/<\/?a.+?>/g,''); }
+  if (params.classy) { ROW_HTML = ROW_HTML.replace(/<\/?a.+?>/g,''); }
 
   function gender2class(gender) { return 'gender-'+(gender || 'any'); }
 
@@ -43,7 +44,7 @@ $(function() {
   $('#q').attr('value',params.q);
   $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender);
   $('input:radio').click(function() { update_gender($(this).val()); });
-  if (params.asshole) {
+  if (!params.classy) {
     $('body').addClass('asshole');
   } else {
     $('.black').live('mouseover mouseout', function(event) { $('#explain').toggle( event.type === 'mouseover' ); });
