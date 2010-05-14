@@ -6,7 +6,7 @@ $(function() {
   params.q      = params.q      || examples[0];
   params.gender = params.gender || 'any';
   params.maxlen = params.maxlen || 500;
-  params.asshole = params.asshole || false;
+  params.asshole = params.asshole || true;
    
   function hide(name)   { return params.asshole ? name : name.replace(/[a-z]/g,'-'); } // just show initials unless in asehole mode
   function encode(text) { return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  }
