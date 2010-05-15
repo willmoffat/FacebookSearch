@@ -104,6 +104,10 @@ $(function() {
     }
     $.each(response.data,function(_,post) {
       if (!post || !post.from || !post.from.id) { return; } //TODO: when does this happen?
+      if (post.from && post.from.category) {
+        //not a user, probably not interesting
+        return;
+      }
       $.getJSON("http://graph.facebook.com/" + post.from.id + "?callback=?", function(user) {
         var classname =  gender2class(user.gender);
         var html = ROW_HTML
