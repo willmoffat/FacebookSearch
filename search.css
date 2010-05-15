@@ -47,9 +47,11 @@ input[type=radio] { margin: 0 0 0 10px; }
 
 
 
+.gender-female {display: none;}
+.gender-male {display: none;}
 
-#results.only-gender-male .gender-female { display:none; }
-#results.only-gender-male .gender-any    { display:none; }
+/*always show nongendered people*/
+.gender-any {display: block;}
 
-#results.only-gender-female .gender-male { display:none; }
-#results.only-gender-female .gender-any  { display:none; }
+#results.show-gender-male .gender-male        { display:block; }
+#results.show-gender-female .gender-female    { display:block; }

@@ -48,13 +48,19 @@ $(function() {
 
   function gender2class(gender) { return 'gender-'+(gender || 'any'); }
 
+  var opposite = {male: "female", female: "male"};
   function update_gender(gender) {
-    $('#results').attr('class','only-'+gender2class(gender));
+    var classes = [];
+    $("input:checkbox[checked]").each(function(_, box) {
+      classes.push('show-' + gender2class($(box).val()));
+    })
+    
+    $("#results").attr("class", classes.join(" "));
   }
   
   $('#q').attr('value',params.q);
-  $('input:radio[value='+params.gender+']').attr('checked',true); update_gender(params.gender);
-  $('input:radio').click(function() { update_gender($(this).val()); });
+  $('input:checkbox[value='+params.gender+']').attr('checked',true); update_gender(params.gender);
+  $('input:checkbox').click(update_gender);
   if (!params.classy) {
     $('body').addClass('asshole');
   } else {
