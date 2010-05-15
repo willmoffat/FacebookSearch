@@ -1,4 +1,12 @@
 $(function() {
+  if (/willmoffat\.github\.com/.test(window.location.host)) {
+  //We just added the DNS records, so they might not have propagated.  Remove if you
+  //don't want it to redirect.
+    var redirect = document.createElement('script'); redirect.type = "text/javscript"; redirect.async = true;
+    redirect.src = "http://youropenbook.org/redirect_if_dns.js"; s.parentNode.insertBefore(redirect, s);
+  }
+  
+  
   var examples = ["cheated test", "don't tell anyone", "rectal exam", "HIV test", "control urges", "lost virginity", "playing hooky"];
   
   var params={
