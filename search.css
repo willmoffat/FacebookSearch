@@ -28,7 +28,11 @@ input[type=radio] { margin: 0 0 0 10px; }
 #search { vertical-align: bottom; }
 #updates form { border-bottom: 1px solid #ccc; padding: 0 0 10px 0; }
 #examples { padding: 10px 0 20px 0; }
-#examples a { padding: 0 0 0 10px; }
+.examples a { padding: 0 0 0 10px; }
+#latest { margin-top: -13px;}
+
+.invisible {display: none;}
+
 #results { padding: 10px; }
 .waitloading {  clear: both; text-align: center; }
 .update { padding: 0 0 20px 0; clear: both; }

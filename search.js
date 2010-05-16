@@ -70,7 +70,17 @@ $(function() {
       $('<img src="http://hamstersoup.com/w.gif?ts='+ +new Date()+'" />').appendTo('body');
   }, 1000);
 
-  $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo($('#examples')); });
+  setExamples(examples, "#examples");
+
+  $.getJSON("http://popular.youropenbook.org:8000/?q=" + $("#q").val() + "&callback=?", function(response) {
+    setExamples(response.latest, "#latest");
+    $("#latest").show();
+  })
+
+  function setExamples(examples, location) {
+    $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo(location); });
+  }
+
   
   function loadMore() {
     var page_remaining = $(document).height() - ($(window).height() + $(window).scrollTop());
