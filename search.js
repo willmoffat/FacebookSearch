@@ -8,7 +8,7 @@ $(function() {
   }
   
   
-  var examples = ["cheated test", "don't tell anyone", "rectal exam", "HIV test", "control urges", "lost virginity", "playing hooky"];
+  var examples = shuffle(["cheated test", "don't tell anyone", "rectal exam", "HIV test", "control urges", "lost virginity", "playing hooky"]);
   
   var params={
     q:  examples[0],  // query str
@@ -187,4 +187,13 @@ $(function() {
     return result;
   };
 
+  function shuffle(arr) {
+    for (var i = 1; i < arr.length; i++) {
+      var target = Math.round((Math.random() * i));
+      var tmp = arr[target];
+      arr[target] = arr[i];
+      arr[i] = tmp;
+    }
+    return arr;
+  }
 });
