@@ -8,7 +8,7 @@ $(function() {
   }
   
   
-  var examples = shuffle(["cheated test", "don't tell anyone", "rectal exam", "HIV test", "control urges", "lost virginity", "playing hooky"]);
+  var examples = shuffle(["cheated test", '"don\'t tell anyone"', "rectal exam", '"HIV test"', "control urges", '"lost my virginity"', "playing hooky", '"dna test"', '"divorce trial"', "professor asshole", '"going to a strip club"', '"boss is an asshole"', '"my dui"', '"I hate my boss"', '"I hate my job"', '"Having a wank"', '"i\'m not racist but"']);
   
   var params={
     q:  examples[0],  // query str
@@ -69,8 +69,6 @@ $(function() {
   setTimeout(function() {
       $('<img src="http://hamstersoup.com/w.gif?ts='+ +new Date()+'" />').appendTo('body');
   }, 1000);
-
-  setExamples(examples, "#examples");
 
   $.getJSON("http://popular.youropenbook.org:8000/?q=" + $("#q").val() + "&callback=?", function(response) {
     setExamples(response.latest, "#latest");
