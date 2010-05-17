@@ -1,6 +1,4 @@
 $(function() {
-  // use the new site
-  window.location = "http://youropenbook.org/" + (window.location.search || "");
 
   
   
