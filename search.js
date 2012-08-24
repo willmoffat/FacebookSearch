@@ -61,10 +61,11 @@ $(function() {
     $('.black').live('mouseover mouseout', function(event) { $('#explain').toggle( event.type === 'mouseover' ); });
   }
 
-  $.getJSON("http://popular.youropenbook.org:8000/?q=" + $("#q").val() + "&callback=?", function(response) {
-    setExamples(response.latest, "#latest");
-    $("#latest").show();
-  })
+  // Server-side component is no more.
+  // $.getJSON("http://popular.youropenbook.org:8000/?q=" + $("#q").val() + "&callback=?", function(response) {
+  //  setExamples(response.latest, "#latest");
+  //  $("#latest").show();
+  // })
 
   function setExamples(examples, location) {
     $.each(examples,function(_,example){ $('<a>',{href:'?q='+encodeURIComponent(example),text:example}).appendTo(location); });
